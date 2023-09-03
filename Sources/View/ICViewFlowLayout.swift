@@ -337,7 +337,7 @@ open class ICViewFlowLayout<Settings: ICSettings>: UICollectionViewFlowLayout {
         
         let section = section(forCollectionViewPoint: cPoint, withPointInSelfView: sPoint)
         let origin = point(forMoveTo: cPoint, pointInView: tapPoint ?? .zero, withSection: section)
-        let cellSize = size(forMoveCellBetween: vm.startDate, andEnd: vm.endDate ?? vm.intraEndDate)
+        let cellSize = size(forMoveCellBetween: vm.start, andEnd: vm.end)
         
         return CGRect(
             x: origin.x,

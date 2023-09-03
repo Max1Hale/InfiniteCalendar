@@ -71,7 +71,7 @@ open class ICView<View: CellableView, Cell: ViewHostingCell<View>, Settings: ICS
         var vm = View.VM.create(from: selectedCell?.viewModel, state: type == .addNew ? .resizing : .moving)
         
         if type == .addNew {
-            vm.startDate = startDate
+            vm.start = startDate
             vm.intraStartDate = startDate
         }
         currentEditingCellInfo?.viewModel = vm
@@ -284,8 +284,8 @@ open class ICView<View: CellableView, Cell: ViewHostingCell<View>, Settings: ICS
         guard let info = currentEditingCellInfo, let editingView = longTapView else { return }
         let dateRange = layout.dateRange(forCell: editingView.frame,
                                              type: currentLongTapType,
-                                             originStart: info.viewModel.startDate,
-                                             originEnd: info.viewModel.endDate)
+                                             originStart: info.viewModel.start,
+                                             originEnd: info.viewModel.end)
         delegateForLongTap?.icView(self, didCancel: info.viewModel, startAt: dateRange.startDate, endAt: dateRange.endDate)
     }
     
@@ -297,10 +297,10 @@ open class ICView<View: CellableView, Cell: ViewHostingCell<View>, Settings: ICS
         
         let dateRange = layout.dateRange(forCell: editingView.frame,
                                              type: currentLongTapType,
-                                             originStart: info.viewModel.startDate,
-                                             originEnd: info.viewModel.endDate)
-        info.viewModel.startDate = dateRange.startDate
-        info.viewModel.endDate = dateRange.endDate
+                                             originStart: info.viewModel.start,
+                                             originEnd: info.viewModel.end)
+        info.viewModel.start = dateRange.startDate
+        info.viewModel.end = dateRange.endDate
         
         let isSmallerThan30Min = dateRange.startDate.distance(to: dateRange.endDate) < TimeInterval(30*60)
         info.viewModel.intraStartDate = dateRange.startDate

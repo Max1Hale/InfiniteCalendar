@@ -126,12 +126,12 @@ open class ICViewHelper {
     open class func getIntraEventsByDate<T:ICEventable>(events: [T]) -> [Date: [T]] {
         var resultEvents = [Date: [T]]()
         for event in events {
-            let startDateStartDay = event.startDate.startOfDay
+            let startDateStartDay = event.start.startOfDay
             // get days from both startOfDay, othrewize 22:00 - 01:00 case will get 0 daysBetween result
-            let daysBetween = Date.daysBetween(start: startDateStartDay, end: event.endDate ?? Date(), ignoreHours: true)
-            
-            guard daysBetween >= 0 else {
-                assertionFailure("DaysBetween can't be negative value")
+            let daysBetween = Date.daysBetween(start: event.start, end: event.end, ignoreHours: true)
+
+            if daysBetween < 0 {
+                assertionFailure("Days Between can't be negative value")
                 continue
             }
             

@@ -13,7 +13,9 @@ public extension Date {
     }
 
     var startOfDay: Date {
-        return Calendar.current.startOfDay(for: self)
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar.startOfDay(for: self)
     }
     
     var endOfDay: Date {
@@ -25,9 +27,7 @@ public extension Date {
     }
     
     static func daysBetween(start: Date, end: Date, ignoreHours: Bool) -> Int {
-        let startDate = ignoreHours ? start.startOfDay : start
-        let endDate = ignoreHours ? end.startOfDay : end
-        return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
+        return Calendar.current.dateComponents([.day], from: start, to: end).day!
     }
     
     /// return difference time of second
